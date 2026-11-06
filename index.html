@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>F.Y. — Creative Portfolio</title>
+<style>
+:root{--bg:#111;--panel:#191919;--panel2:#202020;--line:#333;--text:#f0f0ed;--muted:#92928e;--soft:#c9c9c4;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.01em}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+a{color:inherit;text-decoration:none}.wrap{max-width:1240px;margin:auto;padding:0 34px}
+header{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:19px;letter-spacing:.19em;font-weight:650}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.28em;margin-top:5px;font-weight:400}
+.nav{display:flex;gap:28px;align-items:center;color:var(--muted);font-size:12px;letter-spacing:.12em}.nav a:hover{color:white}
+.btn{border:1px solid #666;background:transparent;color:var(--text);padding:11px 16px;font-size:11px;letter-spacing:.1em;transition:.2s}.btn:hover{background:#eee;color:#111;border-color:#eee}.btn.primary{background:#eee;color:#111;border-color:#eee}.btn.primary:hover{background:#ccc}.btn.danger{border-color:#754d4d;color:#e6aaaa}
+.hero{padding:105px 0 84px;display:grid;grid-template-columns:1.3fr .7fr;gap:50px;align-items:end}
+.kicker{font-size:10px;color:var(--muted);letter-spacing:.28em;text-transform:uppercase}.hero h1{font-size:clamp(52px,9vw,112px);line-height:.91;letter-spacing:-.075em;font-weight:500;margin:25px 0 28px}.hero h1 span{color:#777}
+.hero p{max-width:480px;color:#aaa;font-size:14px;line-height:2}
+.hero-side{border-left:1px solid var(--line);padding:10px 0 8px 28px;color:var(--muted);font-size:12px;line-height:2.1}.hero-side strong{color:#eee;font-weight:500}
+.rule{border:0;border-top:1px solid var(--line);margin:0}
+.section-head{display:flex;justify-content:space-between;align-items:end;padding:38px 0 24px}.section-head h2{font-size:24px;font-weight:450;letter-spacing:-.04em;margin:0}.section-head p{color:var(--muted);font-size:11px;margin:8px 0 0}
+.toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:26px;flex-wrap:wrap}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{background:transparent;border:1px solid var(--line);color:var(--muted);padding:8px 13px;font-size:11px}.filter.active,.filter:hover{border-color:#aaa;color:#fff}
+.search{background:#171717;border:1px solid var(--line);padding:10px 12px;color:#eee;outline:none;width:210px;font-size:12px}.search:focus{border-color:#888}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 20px;padding-bottom:90px}
+.card{min-width:0;cursor:pointer}.thumb{aspect-ratio:4/3;background:#222;overflow:hidden;position:relative;border:1px solid #292929}.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s;filter:saturate(.75)}.card:hover .thumb img{transform:scale(1.035)}.thumb .placeholder{height:100%;display:flex;align-items:center;justify-content:center;color:#666;font-size:11px;letter-spacing:.2em}
+.card-meta{display:flex;justify-content:space-between;gap:12px;margin-top:14px}.card h3{font-size:15px;font-weight:450;margin:0 0 7px}.card .desc{color:var(--muted);font-size:11px;line-height:1.7;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.tag{font-size:9px;color:#aaa;letter-spacing:.1em;border:1px solid #444;padding:5px 7px;height:max-content;white-space:nowrap}
+.empty{grid-column:1/-1;text-align:center;padding:80px 20px;border:1px dashed #383838;color:var(--muted);font-size:13px;line-height:2}
+.about{border-top:1px solid var(--line);padding:70px 0;display:grid;grid-template-columns:1fr 1fr;gap:40px}.about h2{font-size:30px;font-weight:400;letter-spacing:-.05em;margin:12px 0}.about p{font-size:13px;color:var(--muted);line-height:2.1;max-width:500px}.about .contact{border-left:1px solid var(--line);padding-left:28px;color:#aaa;font-size:12px;line-height:2.2}
+footer{border-top:1px solid var(--line);padding:25px 0 35px;color:#666;font-size:10px;letter-spacing:.12em;display:flex;justify-content:space-between}
+.adminbar{display:none;background:#e8e8e3;color:#111;padding:12px 0}.adminbar.show{display:block}.admin-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px}.adminbar .btn{color:#111;border-color:#777}.adminbar .btn.primary{background:#111;color:#fff;border-color:#111}
+.card-actions{display:none;gap:7px;margin-top:10px}.admin-on .card-actions{display:flex}.mini{background:transparent;border:1px solid #555;color:#ccc;padding:6px 10px;font-size:10px}
+.modal{display:none;position:fixed;inset:0;background:#000c;z-index:10;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.dialog{width:min(680px,100%);max-height:90vh;overflow:auto;background:#181818;border:1px solid #444;padding:28px}.dialog h2{font-weight:400;margin:0 0 22px;font-size:22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:10px;color:#aaa;letter-spacing:.1em}.field input,.field textarea,.field select{width:100%;background:#101010;color:#eee;border:1px solid #444;padding:11px;outline:none;font-size:12px}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#aaa}.hint{font-size:10px;color:#777;line-height:1.7}.modal-actions{display:flex;justify-content:space-between;gap:10px;margin-top:22px}.modal-actions .right{display:flex;gap:8px}
+.detail-dialog{width:min(900px,100%);padding:0;position:relative}.detail-img{width:100%;max-height:58vh;object-fit:contain;background:#111;display:block}.detail-content{padding:25px 30px 30px}.detail-content h2{margin:8px 0;font-size:25px}.detail-content p{color:#aaa;line-height:1.9;font-size:13px;white-space:pre-wrap}.close{position:absolute;right:14px;top:14px;background:#111c;border:1px solid #666;color:white;width:36px;height:36px;font-size:20px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#eee;color:#111;padding:11px 18px;font-size:12px;z-index:30;display:none}
+@media(max-width:760px){.wrap{padding:0 20px}.nav{gap:13px}.nav a{display:none}.hero{padding:72px 0 55px;grid-template-columns:1fr;gap:22px}.hero-side{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px}.about{grid-template-columns:1fr;padding:50px 0}.about .contact{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}.section-head{padding-top:28px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}footer{gap:10px;flex-direction:column}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.search{width:100%}.toolbar{align-items:stretch}.filters{width:100%}.hero h1{font-size:58px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="brand" href="#">F.Y.<small>CREATIVE PORTFOLIO</small></a>
+  <nav class="nav"><a href="#works">WORKS</a><a href="#about">ABOUT</a><button class="btn" id="adminToggle">管理入口 ↗</button></nav>
+</header>
+<section class="hero">
+  <div><div class="kicker">SELECTED WORKS / 2026—</div><h1>Ideas into<br><span>visuals.</span></h1><p>用设计记录想法，用影像捕捉细节。这里收藏我的演示设计、摄影作品、视觉创作与技术实践。</p></div>
+  <div class="hero-side"><strong>F.Y. CREATIVE STUDIO</strong><br>Presentation · Photography<br>Visual Design · Technology<br><br>独立创作 / 持续更新<br>Based in China</div>
+</section>
+<div class="adminbar" id="adminbar"><div class="wrap admin-inner"><span>管理模式已开启 · 作品数据保存在当前浏览器</span><div><button class="btn primary" id="addBtn">＋ 添加作品</button> <button class="btn" id="backupBtn">导出备份</button> <button class="btn" id="restoreBtn">导入备份</button> <button class="btn" id="exitAdmin">退出管理</button></div></div></div>
+<hr class="rule">
+<section id="works">
+  <div class="section-head"><div><div class="kicker">THE ARCHIVE</div><h2>Selected Works</h2><p>作品档案 · 按类别浏览</p></div><div class="kicker" id="countLabel">00 PROJECTS</div></div>
+  <div class="toolbar"><div class="filters" id="filters"></div><input class="search" id="search" placeholder="搜索作品名称…" aria-label="搜索作品"></div>
+  <div class="grid" id="grid"></div>
+</section>
+<section class="about" id="about">
+  <div><div class="kicker">A LITTLE ABOUT ME</div><h2>Design with<br>clarity & purpose.</h2><p>你好，我是 F.Y.。一名持续探索设计、摄影与技术的大学生。希望用清晰的表达和克制的视觉，让每个作品都恰到好处。</p></div>
+  <div class="contact"><div class="kicker">CAPABILITIES</div><p>01 / PPT 演示设计与美化<br>02 / 摄影与基础后期<br>03 / 海报及视觉内容<br>04 / 编程与物联网实践</p><div class="kicker">CONTACT</div><p>合作与交流：请在此处替换为你的邮箱或社交账号。</p></div>
+</section>
+<footer><span>© 2026 F.Y. CREATIVE STUDIO</span><span>MADE WITH INTENTION.</span></footer>
+</div>
+
+<div class="modal" id="editModal"><div class="dialog">
+  <h2 id="formTitle">添加作品</h2>
+  <form id="workForm"><div class="form-grid">
+    <div class="field"><label>作品名称 *</label><input id="title" required maxlength="70" placeholder="例如：校园活动视觉提案"></div>
+    <div class="field"><label>作品分类 *</label><select id="category"><option>PPT设计</option><option>摄影作品</option><option>平面设计</option><option>编程项目</option><option>其他</option></select></div>
+    <div class="field full"><label>作品简介</label><textarea id="description" maxlength="1000" placeholder="介绍创作思路、使用工具或项目亮点…"></textarea></div>
+    <div class="field full"><label>封面图片</label><input id="cover" type="file" accept="image/*"><span class="hint">建议使用横版图片。图片会保存在本机浏览器中；单张建议小于 5MB。</span></div>
+    <div class="field full"><label>作品文件（可选）</label><input id="attachment" type="file"><span class="hint">可附加 PDF、PPT、压缩包等文件。注意浏览器存储空间有限。</span></div>
+  </div><div class="modal-actions"><button type="button" class="btn" id="cancelEdit">取消</button><div class="right"><button type="submit" class="btn primary">保存作品</button></div></div></form>
+</div></div>
+<div class="modal" id="detailModal"><div class="dialog detail-dialog"><button class="close" id="closeDetail">×</button><img class="detail-img" id="detailImage" alt=""><div class="detail-content"><div class="kicker" id="detailCategory"></div><h2 id="detailTitle"></h2><p id="detailDescription"></p><a class="btn" id="downloadAttachment" href="#" download style="display:none">下载作品文件 ↓</a></div></div></div>
+<input type="file" id="backupFile" accept="application/json" hidden>
+<div class="toast" id="toast"></div>
+<script>
+const DB_NAME='fyCreativePortfolioDB', STORE='works';
+let db, works=[], editingId=null, admin=false, activeFilter='全部';
+const categories=['全部','PPT设计','摄影作品','平面设计','编程项目','其他'];
+const $=id=>document.getElementById(id);
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(STORE,{keyPath:'id'});req.onsuccess=()=>{db=req.result;resolve()};req.onerror=()=>reject(req.error)})}
+function reqPromise(req){return new Promise((res,rej)=>{req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)})}
+async function allWorks(){return await reqPromise(db.transaction(STORE).objectStore(STORE).getAll())}
+async function saveWork(w){return reqPromise(db.transaction(STORE,'readwrite').objectStore(STORE).put(w))}
+async function deleteWork(id){return reqPromise(db.transaction(STORE,'readwrite').objectStore(STORE).delete(id))}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2400)}
+function renderFilters(){$('filters').innerHTML=categories.map(c=>`<button class="filter ${c===activeFilter?'active':''}" data-filter="${c}">${c}</button>`).join('');document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{activeFilter=b.dataset.filter;renderFilters();render()})}
+function render(){
+ const q=$('search').value.trim().toLowerCase();
+ const list=works.filter(w=>(activeFilter==='全部'||w.category===activeFilter)&&(!q||w.title.toLowerCase().includes(q)||String(w.description||'').toLowerCase().includes(q)));
+ $('countLabel').textContent=String(list.length).padStart(2,'0')+' PROJECTS';
+ $('grid').innerHTML=list.length?list.map(w=>`<article class="card" data-open="${w.id}"><div class="thumb">${w.cover?`<img src="${w.cover}" alt="${esc(w.title)}">`:`<div class="placeholder">F.Y. / ARCHIVE</div>`}</div><div class="card-meta"><div><h3>${esc(w.title)}</h3><div class="desc">${esc(w.description||'暂无简介')}</div></div><span class="tag">${esc(w.category)}</span></div><div class="card-actions"><button class="mini" data-edit="${w.id}">编辑</button><button class="mini" data-delete="${w.id}">删除</button></div></article>`).join(''):`<div class="empty">${works.length?'没有找到符合条件的作品。':'作品集正在等待第一件作品。'}<br>${admin?'点击右上角「添加作品」，开始建立你的作品档案。':'更多作品即将呈现。'}</div>`;
+ document.querySelectorAll('[data-open]').forEach(el=>el.onclick=e=>{if(e.target.closest('button'))return;showDetail(el.dataset.open)});
+ document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=e=>{e.stopPropagation();openForm(b.dataset.edit)});
+ document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=async e=>{e.stopPropagation();if(confirm('确定删除这件作品吗？此操作无法撤销。')){await deleteWork(b.dataset.delete);await refresh();toast('作品已删除')}})
+}
+async function refresh(){works=await allWorks();works.sort((a,b)=>b.created-a.created);render()}
+function setAdmin(v){admin=v;document.body.classList.toggle('admin-on',v);$('adminbar').classList.toggle('show',v);$('adminToggle').textContent=v?'管理中 ✓':'管理入口 ↗';render()}
+function openForm(id=null){
+ editingId=id;const w=works.find(x=>x.id===id);$('formTitle').textContent=w?'编辑作品':'添加作品';$('title').value=w?.title||'';$('category').value=w?.category||'PPT设计';$('description').value=w?.description||'';$('cover').value='';$('attachment').value='';$('editModal').classList.add('open')
+}
+function readFile(file){return new Promise((res,rej)=>{if(!file)return res(null);const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+$('workForm').onsubmit=async e=>{e.preventDefault();try{
+ const old=works.find(x=>x.id===editingId)||{};
+ const coverFile=$('cover').files[0], attachFile=$('attachment').files[0];
+ if(coverFile&&coverFile.size>5*1024*1024){toast('封面图片超过5MB，请压缩后再上传');return}
+ const cover=coverFile?await readFile(coverFile):(old.cover||'');
+ const attachment=attachFile?{name:attachFile.name,type:attachFile.type,data:await readFile(attachFile)}:(old.attachment||null);
+ await saveWork({id:editingId||crypto.randomUUID(),title:$('title').value.trim(),category:$('category').value,description:$('description').value.trim(),cover,attachment,created:old.created||Date.now(),updated:Date.now()});
+ $('editModal').classList.remove('open');await refresh();toast('作品保存成功')
+ }catch(err){console.error(err);toast('保存失败，可能是浏览器存储空间不足')}}
+function showDetail(id){const w=works.find(x=>x.id===id);if(!w)return;$('detailImage').src=w.cover||'';$('detailImage').style.display=w.cover?'block':'none';$('detailCategory').textContent=w.category;$('detailTitle').textContent=w.title;$('detailDescription').textContent=w.description||'暂无简介';const a=$('downloadAttachment');if(w.attachment){a.style.display='inline-block';a.href=w.attachment.data;a.download=w.attachment.name}else{a.style.display='none'}$('detailModal').classList.add('open')}
+$('adminToggle').onclick=()=>setAdmin(!admin);$('exitAdmin').onclick=()=>setAdmin(false);$('addBtn').onclick=()=>openForm();$('cancelEdit').onclick=()=>$('editModal').classList.remove('open');$('closeDetail').onclick=()=>$('detailModal').classList.remove('open');$('search').oninput=render;
+$('editModal').onclick=e=>{if(e.target===$('editModal'))$('editModal').classList.remove('open')};$('detailModal').onclick=e=>{if(e.target===$('detailModal'))$('detailModal').classList.remove('open')};
+$('backupBtn').onclick=()=>{const blob=new Blob([JSON.stringify(works)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='FY作品集备份.json';a.click();URL.revokeObjectURL(url);toast('备份文件已导出')};
+$('restoreBtn').onclick=()=>$('backupFile').click();
+$('backupFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw Error();for(const w of arr){if(w.id&&w.title)await saveWork(w)}await refresh();toast('备份导入完成')}catch{toast('备份文件格式不正确')}e.target.value=''};
+(async()=>{try{await openDB();await refresh();renderFilters()}catch(e){console.error(e);toast('浏览器不支持本地作品存储')}})();
+</script>
+</body>
+</html>
